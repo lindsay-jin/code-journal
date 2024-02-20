@@ -18,12 +18,24 @@
   <body>
     <header>
       <div class="container">
-        <nav>Code Journal</nav>
+        <nav>
+          <ul class="nav-ul">
+            <li class="nav-list nav-title"><a href="">Code Journal</a></li>
+            <li class="nav-list nav-entries"><a href="">Entries</a></li>
+          </ul>
+        </nav>
       </div>
     </header>
+
     <main class="container">
-      <h1>New Entry</h1>
-      <div data-view="entry-form">
+      <div class="h1-row">
+        <h1>Entries</h1>
+        <div>
+          <button class="new-button">NEW</button>
+        </div>
+      </div>
+
+      <div data-view="entry-form" class="hidden">
         <form>
           <div class="row">
             <div class="column-full column-half">
@@ -56,7 +68,31 @@
           </div>
         </form>
       </div>
-      <div data-view="entries" class="hidden"></div>
+      <div data-view="entries">
+        <ul class="entries-ul row">
+          <li class="entries-list row">
+            <img
+              class="column-half"
+              src="images/601.jpeg"
+              alt="yellow dress nara" />
+            <div class="column-half">
+              <h2>Yoshimoto Nara girl</h2>
+              <p>Little girl in a yellow dress</p>
+            </div>
+          </li>
+
+          <li class="row">
+            <img
+              class="column-half"
+              src="images/602.jpg"
+              alt="girl in a dress" />
+            <div class="column-half">
+              <h2>Yoshimoto Nara face</h2>
+              <p>little girl in a scalloped collar dress</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
