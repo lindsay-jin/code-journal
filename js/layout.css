@@ -6,7 +6,6 @@
   max-width: 575px;
   margin: 0 auto;
   padding: 0 1.5rem;
-  width: 100%;
 }
 
 .row {
@@ -16,10 +15,6 @@
 
 .column-full,
 .column-half {
-  width: 100%;
-}
-
-img {
   width: 100%;
 }
 
@@ -35,10 +30,5 @@ img {
 
   .column-half {
     width: 50%;
-  }
-
-  .button-container,
-  h1 {
-    padding: 0 0.75rem;
   }
 }
