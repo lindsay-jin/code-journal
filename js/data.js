@@ -1,14 +1,17 @@
-"use strict";
+'use strict';
 /* exported data */
-const data = {
-    view: 'entry-form',
-    entries: [],
-    editing: null,
-    nextEntryId: 1,
+let data = {
+  view: 'entry-form',
+  entries: [],
+  editing: null,
+  nextEntryId: 1,
 };
-// In data.js, add a 'beforeunload' event listener to the window object that serializes
-// the data model as JSON and stores the JSON in localStorage
 window.addEventListener('beforeunload', () => {
-    const dataJSON = JSON.stringify(data);
-    localStorage.setItem('data-model', dataJSON);
+  const dataJSON = JSON.stringify(data);
+  localStorage.setItem('data-model', dataJSON);
 });
+if (localStorage.getItem('data-model')) {
+  const storedData = localStorage.getItem('data-model');
+  if (!storedData) throw new Error('The $storedData query has failed.');
+  data = JSON.parse(storedData);
+}
