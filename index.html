@@ -17,10 +17,41 @@
   </head>
   <body>
     <header>
-      <div class="container"></div>
+      <div class="container">
+        <h1>New Entry</h1>
+      </div>
     </header>
     <main class="container">
-      <div data-view="entry-form"></div>
+      <div data-view="entry-form">
+        <form>
+          <div class="row">
+            <img
+              class="column-full column-half"
+              src="images/placeholder-image-square.jpg"
+              alt="a placeholder-image-square" />
+            <div class="column full column-half">
+              <label for="title"
+                >Title
+                <input type="text" id="title" name="title" required />
+              </label>
+              <label for="photoURL"
+                >Photo URL
+                <input type="URL" name="photoURL" id="photoURL" required />
+              </label>
+            </div>
+            <label class="column-full" for="notes"
+              >Notes
+              <textarea
+                name="notes"
+                id="notes"
+                cols="30"
+                rows="10"
+                required></textarea>
+            </label>
+          </div>
+          <button>Save</button>
+        </form>
+      </div>
       <div data-view="entries" class="hidden"></div>
     </main>
     <script src="js/data.js"></script>
