@@ -19,8 +19,7 @@ window.addEventListener('beforeunload', () => {
   localStorage.setItem('data-model', dataJSON);
 });
 
-if (localStorage.getItem('data-model')) {
-  const storedData = localStorage.getItem('data-model');
-  if (!storedData) throw new Error('The $storedData query has failed.');
+const storedData = localStorage.getItem('data-model');
+if (storedData) {
   data = JSON.parse(storedData);
 }
