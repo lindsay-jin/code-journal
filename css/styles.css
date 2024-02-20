@@ -2,6 +2,16 @@ body {
   background-color: rgb(238, 238, 238);
 }
 
+header {
+  background-color: rgb(76, 38, 118);
+}
+
+nav {
+  color: white;
+  font-size: 2rem;
+  padding: 20px 0.75rem;
+}
+
 label,
 input,
 textarea {
