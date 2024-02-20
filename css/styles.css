@@ -10,13 +10,14 @@ textarea {
 }
 
 label {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
 input,
 textarea {
   width: 100%;
-  border: 1px solid rgb(225, 225, 225);
+  border: 1px solid rgb(167, 165, 165);
   border-radius: 5px;
   background-color: white;
 }
@@ -30,5 +31,13 @@ button {
   background-color: rgb(76, 36, 116);
   color: white;
   margin: 10px 0;
-  float: right;
+  width: 60px;
+  height: 35px;
+  border-radius: 5px;
+  box-shadow: 2px 2px black, -2px -2px white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
 }

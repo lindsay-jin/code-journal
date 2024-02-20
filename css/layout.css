@@ -32,4 +32,8 @@
   .column-half {
     width: 50%;
   }
+
+  .button-container {
+    padding: 0 0.75rem;
+  }
 }
