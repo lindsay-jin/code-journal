@@ -17,9 +17,7 @@ $form?.addEventListener('submit', (event) => {
   };
   data.nextEntryId++;
   data.entries.unshift(obj);
-  const newList = renderEntry(obj);
-  const theFirstChild = $ul?.firstChild;
-  $ul?.insertBefore(newList, theFirstChild);
+  $ul?.prepend(renderEntry(obj));
   viewSwap('entries');
   toggleEntries();
   $img.setAttribute('src', 'images/placeholder-image-square.jpg');
@@ -48,12 +46,12 @@ function renderEntry(entry) {
 const $ul = document.querySelector('.entries-ul');
 document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
-    let currentEntry = renderEntry(data.entries[i]);
+    const currentEntry = renderEntry(data.entries[i]);
     $ul?.appendChild(currentEntry);
-    const previousView = data.view;
-    viewSwap(previousView);
-    toggleEntries();
   }
+  const previousView = data.view;
+  viewSwap(previousView);
+  toggleEntries();
 });
 const $h3 = document.querySelector('h3');
 function toggleEntries() {

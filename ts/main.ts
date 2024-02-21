@@ -30,10 +30,7 @@ $form?.addEventListener('submit', (event: Event) => {
   data.nextEntryId++;
   data.entries.unshift(obj);
 
-  const newList = renderEntry(obj);
-
-  const theFirstChild = $ul?.firstChild as HTMLElement;
-  $ul?.insertBefore(newList, theFirstChild);
+  $ul?.prepend(renderEntry(obj));
   viewSwap('entries');
   toggleEntries();
 
@@ -74,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
     const currentEntry = renderEntry(data.entries[i]);
     $ul?.appendChild(currentEntry);
-    const previousView = data.view;
-    viewSwap(previousView);
-    toggleEntries();
   }
+  const previousView = data.view;
+  viewSwap(previousView);
+  toggleEntries();
 });
 
 const $h3 = document.querySelector('h3') as HTMLElement;
