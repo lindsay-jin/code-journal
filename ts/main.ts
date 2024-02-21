@@ -51,14 +51,29 @@ function renderEntry(entry: Obj): HTMLElement {
   $divImg.appendChild($imgList);
 
   const $divList = document.createElement('div');
-  $divList.className = 'column-half';
+  $divList.className = 'div-list column-half';
   $entriesList.appendChild($divList);
 
+  const $divFirstRow = document.createElement('div');
+  $divFirstRow.className = 'divFirstRow row';
+  $divList.appendChild($divFirstRow);
+
   const $h2List = document.createElement('h2');
+  $h2List.className = 'column-half h2-list';
   $h2List.textContent = entry.title;
-  $divList.appendChild($h2List);
+  $divFirstRow.appendChild($h2List);
+
+  const $divPencil = document.createElement('div');
+  $divPencil.className = 'column-half div-pencil';
+  $divFirstRow.appendChild($divPencil);
+
+  // <i class="fa-solid fa-pencil"></i>;
+  const $i = document.createElement('i');
+  $i.className = 'fa-solid fa-pencil';
+  $divPencil.appendChild($i);
 
   const $pList = document.createElement('p');
+  $pList.className = 'column-full';
   $pList.textContent = entry.notes;
   $divList.appendChild($pList);
 
@@ -114,3 +129,7 @@ $newButton?.addEventListener('click', (event: Event) => {
   event.preventDefault();
   viewSwap('entry-form');
 });
+
+// Add icon next to the title of each entry which matches the figma example.
+//  Add a data-entry-id attribute to the li that stores the entryId of the entry being rendered.
+// <i class="fa-solid fa-pencil"></i>;

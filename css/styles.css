@@ -97,3 +97,9 @@ button {
   display: flex;
   justify-content: flex-end;
 }
+
+.div-pencil {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
