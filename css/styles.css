@@ -9,7 +9,51 @@ header {
 nav {
   color: white;
   font-size: 2rem;
-  padding: 20px 0.75rem;
+  padding: 20px 0;
+}
+
+.nav-entries {
+  padding-left: 20px;
+  font-size: 1.1rem;
+}
+
+.h1-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: center;
+}
+
+h1 {
+  padding: 0 2.25rem;
+}
+
+.new-button {
+  background-color: rgb(76, 38, 118);
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  width: 70px;
+  height: 35px;
+}
+
+li {
+  display: inline-block;
+}
+
+.nav-ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: white;
+}
+
+.entries-list {
+  margin-bottom: 10px;
 }
 
 label,
