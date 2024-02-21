@@ -42,7 +42,6 @@ li {
 }
 
 .nav-ul {
-  display: inline-block;
   display: flex;
   align-items: center;
   margin: 0;
@@ -50,13 +49,7 @@ li {
 
 .nav-list a {
   text-decoration: none;
-  list-style-type: none;
   color: white;
-}
-
-.column-full {
-  text-decoration: none;
-  list-style-type: none;
 }
 
 .entries-list {
