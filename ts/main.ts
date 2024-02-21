@@ -41,6 +41,9 @@ $form?.addEventListener('submit', (event: Event) => {
 function renderEntry(entry: Obj): HTMLElement {
   const $entriesList = document.createElement('li');
   $entriesList.className = 'entries-list row';
+  $entriesList.setAttribute('data-entry-id', entry.entryId.toString());
+  // let attributeValue = $entriesList.getAttribute('data-entry-id');
+  // console.log(attributeValue)
 
   const $divImg = document.createElement('div');
   $divImg.className = 'column-half';
@@ -67,7 +70,6 @@ function renderEntry(entry: Obj): HTMLElement {
   $divPencil.className = 'column-half div-pencil';
   $divFirstRow.appendChild($divPencil);
 
-  // <i class="fa-solid fa-pencil"></i>;
   const $i = document.createElement('i');
   $i.className = 'fa-solid fa-pencil';
   $divPencil.appendChild($i);
@@ -118,18 +120,53 @@ function viewSwap(view: string): void {
   data.view = view;
 }
 
+const $h1Entries = document.querySelector('.h1-entries');
+const $h1NewEntry = document.querySelector('.h1-new-entry');
+const $h1EditEntry = document.querySelector('.h1-edit-entry');
+
 const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event: Event) => {
   event?.preventDefault();
   viewSwap('entries');
+  $h1Entries?.classList.remove('hidden');
+  $h1EditEntry?.classList.add('hidden');
+  $h1NewEntry?.classList.add('hidden');
 });
 
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event: Event) => {
   event.preventDefault();
   viewSwap('entry-form');
+  $h1Entries?.classList.add('hidden');
+  $h1NewEntry?.classList.remove('hidden');
+  $h1EditEntry?.classList.add('hidden');
 });
 
-// Add icon next to the title of each entry which matches the figma example.
-//  Add a data-entry-id attribute to the li that stores the entryId of the entry being rendered.
-// <i class="fa-solid fa-pencil"></i>;
+$ul?.addEventListener('click', (event: Event) => {
+  viewSwap('entry-form');
+  $h1Entries?.classList.add('hidden');
+  $h1NewEntry?.classList.add('hidden');
+  $h1EditEntry?.classList.remove('hidden');
+
+  const $eventTarget = event.target as HTMLElement;
+  if ($eventTarget.tagName === 'I') {
+    const $closestElement = $eventTarget.closest(
+      '.entries-list'
+    ) as HTMLElement;
+    const $dataEntryIdValue = $closestElement?.getAttribute('data-entry-id');
+
+    for (let i = 0; i < data.entries.length; i++) {
+      let entry;
+      if (data.entries[i].entryId === Number($dataEntryIdValue)) {
+        entry = data.entries[i];
+        data.editing = entry;
+        console.log(data.editing);
+      }
+    }
+  }
+
+  $inputTitle.value = data.editing?.title as string;
+  $inputURL.value = data.editing?.photoURL as string;
+  $textarea.value = data.editing?.notes as string;
+  $img.setAttribute('src', $inputURL.value);
+});

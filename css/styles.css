@@ -103,3 +103,7 @@ button {
   justify-content: flex-end;
   align-items: center;
 }
+
+.fa-solid {
+  cursor: pointer;
+}
