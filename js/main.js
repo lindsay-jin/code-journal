@@ -127,6 +127,7 @@ $newButton?.addEventListener('click', (event) => {
   viewSwap('entry-form');
   $h1.textContent = 'Entry Form';
 });
+//editing
 $ul?.addEventListener('click', (event) => {
   viewSwap('entry-form');
   $h1.textContent = 'Edit Entry';
@@ -177,5 +178,11 @@ $confirmButton?.addEventListener('click', (event) => {
   }
   toggleEntries();
   $deleteDialog.close();
+  $form?.reset();
+  data.editing = null;
   viewSwap('entries');
+  $inputTitle.value = '';
+  $inputURL.value = '';
+  $textarea.value = '';
+  $img.setAttribute('src', 'images/placeholder-image-square.jpg');
 });
