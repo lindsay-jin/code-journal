@@ -19,12 +19,8 @@ $form?.addEventListener('submit', (event) => {
     data.nextEntryId++;
     data.entries.unshift(obj);
     $ul?.prepend(renderEntry(obj));
-    viewSwap('entries');
-    toggleEntries();
     $img.setAttribute('src', 'images/placeholder-image-square.jpg');
-    $form.reset();
   } else if (data.editing) {
-    //Replace the original object in the data.entries array for the edited entry with the new object with the edited data.
     obj = {
       title: $inputTitle.value,
       photoURL: $inputURL.value,
@@ -36,12 +32,25 @@ $form?.addEventListener('submit', (event) => {
         data.entries[i] = obj;
       }
     }
-    //Render a new DOM tree for the new object with the updated data, and replace the original li with the matching
-    //data-entry-id value with the new generated DOM tree.
+    const newObj = renderEntry(obj);
+    const $allEntries = $ul?.querySelectorAll('li');
+    const dataEditingEntryId = data.editing.entryId;
+    for (let i = 0; i < $allEntries?.length; i++) {
+      let $theEntry = $allEntries[i];
+      let $entryValue = $theEntry.getAttribute('data-entry-id');
+      if ($entryValue === dataEditingEntryId.toString()) {
+        $theEntry.replaceWith(newObj);
+      }
+    }
   }
+  $h1NewEntry?.classList.remove('hidden');
+  $h1EditEntry?.classList.add('hidden');
+  $h1Entries?.classList.add('hidden');
+  data.editing = null;
+  $form.reset();
+  viewSwap('entries');
+  toggleEntries();
 });
-//console.log('data.editing:', data.editing)
-//console.log('data.entries:',data.entries)
 function renderEntry(entry) {
   const $entriesList = document.createElement('li');
   $entriesList.className = 'entries-list row';
