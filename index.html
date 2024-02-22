@@ -65,29 +65,29 @@
           </div>
 
           <div class="bottom-row">
-            <div class="delete-btn-container">
-              <button class="delete-button">Delete Entry</button>
+            <div class="delete-entry-container">
+              <a href="" class="delete-entry">Delete Entry</a>
             </div>
             <div class="save-btn-container">
               <button class="save-button">SAVE</button>
             </div>
           </div>
-
-          <dialog class="delete-dialog">
-            <div>
-              <p>Are you sure you want to delete this entry?</p>
-              <div class="dialog-btn-container">
-                <button class="cancel-button"></button>
-                <button class="confirm-button"></button>
-              </div>
-            </div>
-          </dialog>
         </form>
       </div>
       <div data-view="entries">
         <ul class="entries-ul"></ul>
         <h3 class="hidden">No entries have been recorded.</h3>
       </div>
+
+      <dialog class="delete-dialog">
+        <div>
+          <p>Are you sure you want to delete this entry?</p>
+          <div class="dialog-btn-container">
+            <button class="cancel-button">Cancel</button>
+            <button class="confirm-button">Confirm</button>
+          </div>
+        </div>
+      </dialog>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>

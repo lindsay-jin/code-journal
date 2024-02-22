@@ -102,7 +102,7 @@ function toggleEntries() {
 }
 const $entries = document.querySelector('div[data-view="entries"]');
 const $entryForm = document.querySelector('div[data-view="entry-form"]');
-const $deleteButton = document.querySelector('.delete-button');
+const $deleteEntry = document.querySelector('.delete-entry');
 function viewSwap(view) {
   if (view === 'entries') {
     $entries?.classList.remove('hidden');
@@ -112,7 +112,7 @@ function viewSwap(view) {
     $entryForm?.classList.remove('hidden');
     $entries?.classList.add('hidden');
     $newButton?.classList.add('hidden');
-    $deleteButton?.classList.add('hidden');
+    $deleteEntry?.classList.add('hidden');
   }
   data.view = view;
 }
@@ -131,7 +131,7 @@ $newButton?.addEventListener('click', (event) => {
 $ul?.addEventListener('click', (event) => {
   viewSwap('entry-form');
   $h1.textContent = 'Edit Entry';
-  $deleteButton?.classList.remove('hidden');
+  $deleteEntry?.classList.remove('hidden');
   const $eventTarget = event.target;
   if ($eventTarget.tagName === 'I') {
     const $closestElement = $eventTarget.closest('.entries-list');
@@ -148,4 +148,14 @@ $ul?.addEventListener('click', (event) => {
   $inputURL.value = data.editing?.photoURL;
   $textarea.value = data.editing?.notes;
   $img.setAttribute('src', $inputURL.value);
+});
+const $deleteDialog = document.querySelector('.delete-dialog');
+$deleteEntry?.addEventListener('click', (event) => {
+  event?.preventDefault();
+  $deleteDialog.showModal();
+});
+const $cancelButton = document.querySelector('.cancel-button');
+$cancelButton?.addEventListener('click', (event) => {
+  event?.preventDefault();
+  $deleteDialog.close();
 });

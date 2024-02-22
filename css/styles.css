@@ -15,6 +15,7 @@ nav {
 .nav-entries {
   padding-left: 20px;
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .h1-row {
@@ -35,6 +36,7 @@ h1 {
   border-radius: 5px;
   width: 70px;
   height: 35px;
+  cursor: pointer;
 }
 
 li {
@@ -98,13 +100,14 @@ input {
   height: 35px;
   border-radius: 5px;
   box-shadow: 2px 2px black, -2px -2px white;
+  cursor: pointer;
 }
 
-.delete-button {
+.delete-entry {
   border: none;
   color: red;
-  text-decoration: underline;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .div-pencil {
@@ -115,4 +118,25 @@ input {
 
 .fa-solid {
   cursor: pointer;
+}
+
+.dialog-btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 90px;
+  height: 30px;
+}
+
+.confirm-button {
+  background-color: red;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 90px;
+  height: 30px;
 }
