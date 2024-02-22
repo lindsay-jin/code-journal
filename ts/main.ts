@@ -17,6 +17,8 @@ $inputURL?.addEventListener('input', () => {
 
 const $form = document.querySelector('form');
 const $h1 = document.querySelector('h1') as HTMLHeadingElement;
+const $ul = document.querySelector('.entries-ul');
+const $allEntries = $ul?.querySelectorAll('li') as NodeListOf<HTMLElement>;
 
 $form?.addEventListener('submit', (event: Event) => {
   event.preventDefault();
@@ -110,8 +112,6 @@ function renderEntry(entry: Obj): HTMLElement {
   return $entriesList;
 }
 
-const $ul = document.querySelector('.entries-ul');
-
 document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
     const currentEntry = renderEntry(data.entries[i]);
@@ -204,3 +204,31 @@ $cancelButton?.addEventListener('click', (event: Event) => {
   event?.preventDefault();
   $deleteDialog.close();
 });
+
+// remove the corresponding entry object from the data model's entry array.
+const $confirmButton = document.querySelector('.confirm-button');
+$confirmButton?.addEventListener('click', (event: Event) => {
+  event?.preventDefault();
+  if (!data.editing) throw new Error('The data.editing query has failed.');
+
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+    }
+  }
+
+  const dataEditingEntryId = data.editing.entryId;
+  for (let i = 0; i < $allEntries?.length; i++) {
+    const $theEntry = $allEntries[i];
+    const $entryValue = $theEntry.getAttribute('data-entry-id');
+    if ($entryValue === dataEditingEntryId.toString()) {
+      $theEntry.remove();
+    }
+  }
+});
+
+//  remove the entry's li element from the DOM.
+// deleting the li element from ul
+//  conditionally uses the toggleNoEntries function to show the no entries text if needed.
+//  hide the modal.
+//  swap to the Entries view.
