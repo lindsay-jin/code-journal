@@ -19,6 +19,11 @@
   width: 100%;
 }
 
+.column-half.h2-list,
+.column-half.div-pencil {
+  width: 50%;
+}
+
 img {
   width: 100%;
 }

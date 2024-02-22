@@ -7,25 +7,53 @@ $inputURL?.addEventListener('input', () => {
   $img.setAttribute('src', $inputURL.value);
 });
 const $form = document.querySelector('form');
+const $h1 = document.querySelector('h1');
 $form?.addEventListener('submit', (event) => {
   event.preventDefault();
-  const obj = {
+  let obj = {
     title: $inputTitle?.value,
     photoURL: $inputURL.value,
     notes: $textarea.value,
     entryId: data.nextEntryId,
   };
-  data.nextEntryId++;
-  data.entries.unshift(obj);
-  $ul?.prepend(renderEntry(obj));
+  if (!data.editing) {
+    data.nextEntryId++;
+    data.entries.unshift(obj);
+    $ul?.prepend(renderEntry(obj));
+    $img.setAttribute('src', 'images/placeholder-image-square.jpg');
+  } else if (data.editing) {
+    obj = {
+      title: $inputTitle.value,
+      photoURL: $inputURL.value,
+      notes: $textarea.value,
+      entryId: data.editing.entryId,
+    };
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.editing.entryId) {
+        data.entries[i] = obj;
+      }
+    }
+    const newObj = renderEntry(obj);
+    const $allEntries = $ul?.querySelectorAll('li');
+    const dataEditingEntryId = data.editing.entryId;
+    for (let i = 0; i < $allEntries?.length; i++) {
+      const $theEntry = $allEntries[i];
+      const $entryValue = $theEntry.getAttribute('data-entry-id');
+      if ($entryValue === dataEditingEntryId.toString()) {
+        $theEntry.replaceWith(newObj);
+      }
+    }
+  }
+  $h1.textContent = 'Entries';
+  data.editing = null;
+  $form.reset();
   viewSwap('entries');
   toggleEntries();
-  $img.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
 });
 function renderEntry(entry) {
   const $entriesList = document.createElement('li');
   $entriesList.className = 'entries-list row';
+  $entriesList.setAttribute('data-entry-id', entry.entryId.toString());
   const $divImg = document.createElement('div');
   $divImg.className = 'column-half';
   $entriesList.appendChild($divImg);
@@ -33,12 +61,23 @@ function renderEntry(entry) {
   $imgList.setAttribute('src', entry.photoURL);
   $divImg.appendChild($imgList);
   const $divList = document.createElement('div');
-  $divList.className = 'column-half';
+  $divList.className = 'div-list column-half';
   $entriesList.appendChild($divList);
+  const $divFirstRow = document.createElement('div');
+  $divFirstRow.className = 'divFirstRow row';
+  $divList.appendChild($divFirstRow);
   const $h2List = document.createElement('h2');
+  $h2List.className = 'column-half h2-list';
   $h2List.textContent = entry.title;
-  $divList.appendChild($h2List);
+  $divFirstRow.appendChild($h2List);
+  const $divPencil = document.createElement('div');
+  $divPencil.className = 'column-half div-pencil';
+  $divFirstRow.appendChild($divPencil);
+  const $i = document.createElement('i');
+  $i.className = 'fa-solid fa-pencil';
+  $divPencil.appendChild($i);
   const $pList = document.createElement('p');
+  $pList.className = 'column-full';
   $pList.textContent = entry.notes;
   $divList.appendChild($pList);
   return $entriesList;
@@ -79,9 +118,31 @@ const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event) => {
   event?.preventDefault();
   viewSwap('entries');
+  $h1.textContent = 'Entries';
 });
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event) => {
   event.preventDefault();
   viewSwap('entry-form');
+  $h1.textContent = 'Entry Form';
+});
+$ul?.addEventListener('click', (event) => {
+  viewSwap('entry-form');
+  $h1.textContent = 'Edit Entry';
+  const $eventTarget = event.target;
+  if ($eventTarget.tagName === 'I') {
+    const $closestElement = $eventTarget.closest('.entries-list');
+    const $dataEntryIdValue = $closestElement?.getAttribute('data-entry-id');
+    for (let i = 0; i < data.entries.length; i++) {
+      let entry;
+      if (data.entries[i].entryId === Number($dataEntryIdValue)) {
+        entry = data.entries[i];
+        data.editing = entry;
+      }
+    }
+  }
+  $inputTitle.value = data.editing?.title;
+  $inputURL.value = data.editing?.photoURL;
+  $textarea.value = data.editing?.notes;
+  $img.setAttribute('src', $inputURL.value);
 });

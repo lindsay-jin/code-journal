@@ -3,7 +3,7 @@
 interface Data {
   view: string;
   entries: Obj[];
-  editing: null;
+  editing: Obj | null;
   nextEntryId: number;
 }
 
