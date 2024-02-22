@@ -17,8 +17,6 @@ $inputURL?.addEventListener('input', () => {
 
 const $form = document.querySelector('form');
 const $h1 = document.querySelector('h1') as HTMLHeadingElement;
-const $ul = document.querySelector('.entries-ul');
-const $allEntries = $ul?.querySelectorAll('li') as NodeListOf<HTMLElement>;
 
 $form?.addEventListener('submit', (event: Event) => {
   event.preventDefault();
@@ -51,13 +49,12 @@ $form?.addEventListener('submit', (event: Event) => {
     }
 
     const newObj = renderEntry(obj);
-    const $allEntries = $ul?.querySelectorAll('li') as NodeListOf<HTMLElement>;
-    const dataEditingEntryId = data.editing.entryId;
-    for (let i = 0; i < $allEntries?.length; i++) {
-      const $theEntry = $allEntries[i];
-      const $entryValue = $theEntry.getAttribute('data-entry-id');
-      if ($entryValue === dataEditingEntryId.toString()) {
-        $theEntry.replaceWith(newObj);
+    const $allEntries = $ul?.querySelectorAll('li');
+    if (!$allEntries) throw new Error('The $allEntries query has failed.');
+    for (let i = 0; i < $allEntries.length; i++) {
+      const $dataEntryIdValue = $allEntries[i].getAttribute('data-entry-id');
+      if (Number($dataEntryIdValue) === data.editing.entryId) {
+        $allEntries[i].replaceWith(newObj);
       }
     }
   }
@@ -111,6 +108,8 @@ function renderEntry(entry: Obj): HTMLElement {
 
   return $entriesList;
 }
+
+const $ul = document.querySelector('.entries-ul');
 
 document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
@@ -205,7 +204,6 @@ $cancelButton?.addEventListener('click', (event: Event) => {
   $deleteDialog.close();
 });
 
-// remove the corresponding entry object from the data model's entry array.
 const $confirmButton = document.querySelector('.confirm-button');
 $confirmButton?.addEventListener('click', (event: Event) => {
   event?.preventDefault();
@@ -217,18 +215,16 @@ $confirmButton?.addEventListener('click', (event: Event) => {
     }
   }
 
-  const dataEditingEntryId = data.editing.entryId;
-  for (let i = 0; i < $allEntries?.length; i++) {
-    const $theEntry = $allEntries[i];
-    const $entryValue = $theEntry.getAttribute('data-entry-id');
-    if ($entryValue === dataEditingEntryId.toString()) {
-      $theEntry.remove();
+  const $allEntries = $ul?.querySelectorAll('li');
+  if (!$allEntries) throw new Error('The $allEntries query has failed.');
+  for (let i = 0; i < $allEntries.length; i++) {
+    const $dataEntryIdValue = $allEntries[i].getAttribute('data-entry-id');
+    if (Number($dataEntryIdValue) === data.editing.entryId) {
+      $allEntries[i].remove();
     }
   }
-});
 
-//  remove the entry's li element from the DOM.
-// deleting the li element from ul
-//  conditionally uses the toggleNoEntries function to show the no entries text if needed.
-//  hide the modal.
-//  swap to the Entries view.
+  toggleEntries();
+  $deleteDialog.close();
+  viewSwap('entries');
+});
