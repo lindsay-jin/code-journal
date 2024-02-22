@@ -9,26 +9,43 @@ $inputURL?.addEventListener('input', () => {
 const $form = document.querySelector('form');
 $form?.addEventListener('submit', (event) => {
   event.preventDefault();
-  const obj = {
+  let obj = {
     title: $inputTitle?.value,
     photoURL: $inputURL.value,
     notes: $textarea.value,
     entryId: data.nextEntryId,
   };
-  data.nextEntryId++;
-  data.entries.unshift(obj);
-  $ul?.prepend(renderEntry(obj));
-  viewSwap('entries');
-  toggleEntries();
-  $img.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
+  if (!data.editing) {
+    data.nextEntryId++;
+    data.entries.unshift(obj);
+    $ul?.prepend(renderEntry(obj));
+    viewSwap('entries');
+    toggleEntries();
+    $img.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+  } else if (data.editing) {
+    //Replace the original object in the data.entries array for the edited entry with the new object with the edited data.
+    obj = {
+      title: $inputTitle.value,
+      photoURL: $inputURL.value,
+      notes: $textarea.value,
+      entryId: data.editing.entryId,
+    };
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.editing.entryId) {
+        data.entries[i] = obj;
+      }
+    }
+    //Render a new DOM tree for the new object with the updated data, and replace the original li with the matching
+    //data-entry-id value with the new generated DOM tree.
+  }
 });
+//console.log('data.editing:', data.editing)
+//console.log('data.entries:',data.entries)
 function renderEntry(entry) {
   const $entriesList = document.createElement('li');
   $entriesList.className = 'entries-list row';
   $entriesList.setAttribute('data-entry-id', entry.entryId.toString());
-  //let attributeValue = $entriesList.getAttribute('data-entry-id');
-  //console.log(attributeValue)
   const $divImg = document.createElement('div');
   $divImg.className = 'column-half';
   $entriesList.appendChild($divImg);
@@ -116,13 +133,12 @@ $ul?.addEventListener('click', (event) => {
   const $eventTarget = event.target;
   if ($eventTarget.tagName === 'I') {
     const $closestElement = $eventTarget.closest('.entries-list');
-    let $dataEntryIdValue = $closestElement?.getAttribute('data-entry-id');
+    const $dataEntryIdValue = $closestElement?.getAttribute('data-entry-id');
     for (let i = 0; i < data.entries.length; i++) {
       let entry;
       if (data.entries[i].entryId === Number($dataEntryIdValue)) {
         entry = data.entries[i];
         data.editing = entry;
-        console.log(data.editing);
       }
     }
   }

@@ -20,30 +20,49 @@ const $form = document.querySelector('form');
 $form?.addEventListener('submit', (event: Event) => {
   event.preventDefault();
 
-  const obj: Obj = {
+  let obj: Obj = {
     title: $inputTitle?.value,
     photoURL: $inputURL.value,
     notes: $textarea.value,
     entryId: data.nextEntryId,
   };
 
-  data.nextEntryId++;
-  data.entries.unshift(obj);
+  if (!data.editing) {
+    data.nextEntryId++;
+    data.entries.unshift(obj);
 
-  $ul?.prepend(renderEntry(obj));
-  viewSwap('entries');
-  toggleEntries();
+    $ul?.prepend(renderEntry(obj));
+    viewSwap('entries');
+    toggleEntries();
 
-  $img.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
+    $img.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+  } else if (data.editing) {
+    // Replace the original object in the data.entries array for the edited entry with the new object with the edited data.
+    obj = {
+      title: $inputTitle.value,
+      photoURL: $inputURL.value,
+      notes: $textarea.value,
+      entryId: data.editing.entryId,
+    };
+
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.editing.entryId) {
+        data.entries[i] = obj;
+      }
+    }
+    // Render a new DOM tree for the new object with the updated data, and replace the original li with the matching
+    // data-entry-id value with the new generated DOM tree.
+  }
 });
+
+// console.log('data.editing:', data.editing)
+// console.log('data.entries:',data.entries)
 
 function renderEntry(entry: Obj): HTMLElement {
   const $entriesList = document.createElement('li');
   $entriesList.className = 'entries-list row';
   $entriesList.setAttribute('data-entry-id', entry.entryId.toString());
-  // let attributeValue = $entriesList.getAttribute('data-entry-id');
-  // console.log(attributeValue)
 
   const $divImg = document.createElement('div');
   $divImg.className = 'column-half';
@@ -160,7 +179,6 @@ $ul?.addEventListener('click', (event: Event) => {
       if (data.entries[i].entryId === Number($dataEntryIdValue)) {
         entry = data.entries[i];
         data.editing = entry;
-        console.log(data.editing);
       }
     }
   }
