@@ -16,6 +16,7 @@ $inputURL?.addEventListener('input', () => {
 });
 
 const $form = document.querySelector('form');
+const $h1 = document.querySelector('h1') as HTMLHeadingElement;
 
 $form?.addEventListener('submit', (event: Event) => {
   event.preventDefault();
@@ -58,9 +59,8 @@ $form?.addEventListener('submit', (event: Event) => {
       }
     }
   }
-  $h1NewEntry?.classList.remove('hidden');
-  $h1EditEntry?.classList.add('hidden');
-  $h1Entries?.classList.add('hidden');
+
+  $h1.textContent = 'Entries';
 
   data.editing = null;
   $form.reset();
@@ -148,33 +148,23 @@ function viewSwap(view: string): void {
   data.view = view;
 }
 
-const $h1Entries = document.querySelector('.h1-entries');
-const $h1NewEntry = document.querySelector('.h1-new-entry');
-const $h1EditEntry = document.querySelector('.h1-edit-entry');
-
 const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event: Event) => {
   event?.preventDefault();
   viewSwap('entries');
-  $h1Entries?.classList.remove('hidden');
-  $h1EditEntry?.classList.add('hidden');
-  $h1NewEntry?.classList.add('hidden');
+  $h1.textContent = 'Entries';
 });
 
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event: Event) => {
   event.preventDefault();
   viewSwap('entry-form');
-  $h1Entries?.classList.add('hidden');
-  $h1NewEntry?.classList.remove('hidden');
-  $h1EditEntry?.classList.add('hidden');
+  $h1.textContent = 'Entry Form';
 });
 
 $ul?.addEventListener('click', (event: Event) => {
   viewSwap('entry-form');
-  $h1Entries?.classList.add('hidden');
-  $h1NewEntry?.classList.add('hidden');
-  $h1EditEntry?.classList.remove('hidden');
+  $h1.textContent = 'Edit Entry';
 
   const $eventTarget = event.target as HTMLElement;
   if ($eventTarget.tagName === 'I') {

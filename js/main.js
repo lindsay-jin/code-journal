@@ -7,6 +7,7 @@ $inputURL?.addEventListener('input', () => {
   $img.setAttribute('src', $inputURL.value);
 });
 const $form = document.querySelector('form');
+const $h1 = document.querySelector('h1');
 $form?.addEventListener('submit', (event) => {
   event.preventDefault();
   let obj = {
@@ -36,16 +37,14 @@ $form?.addEventListener('submit', (event) => {
     const $allEntries = $ul?.querySelectorAll('li');
     const dataEditingEntryId = data.editing.entryId;
     for (let i = 0; i < $allEntries?.length; i++) {
-      let $theEntry = $allEntries[i];
-      let $entryValue = $theEntry.getAttribute('data-entry-id');
+      const $theEntry = $allEntries[i];
+      const $entryValue = $theEntry.getAttribute('data-entry-id');
       if ($entryValue === dataEditingEntryId.toString()) {
         $theEntry.replaceWith(newObj);
       }
     }
   }
-  $h1NewEntry?.classList.remove('hidden');
-  $h1EditEntry?.classList.add('hidden');
-  $h1Entries?.classList.add('hidden');
+  $h1.textContent = 'Entries';
   data.editing = null;
   $form.reset();
   viewSwap('entries');
@@ -115,30 +114,21 @@ function viewSwap(view) {
   }
   data.view = view;
 }
-const $h1Entries = document.querySelector('.h1-entries');
-const $h1NewEntry = document.querySelector('.h1-new-entry');
-const $h1EditEntry = document.querySelector('.h1-edit-entry');
 const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event) => {
   event?.preventDefault();
   viewSwap('entries');
-  $h1Entries?.classList.remove('hidden');
-  $h1EditEntry?.classList.add('hidden');
-  $h1NewEntry?.classList.add('hidden');
+  $h1.textContent = 'Entries';
 });
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event) => {
   event.preventDefault();
   viewSwap('entry-form');
-  $h1Entries?.classList.add('hidden');
-  $h1NewEntry?.classList.remove('hidden');
-  $h1EditEntry?.classList.add('hidden');
+  $h1.textContent = 'Entry Form';
 });
 $ul?.addEventListener('click', (event) => {
   viewSwap('entry-form');
-  $h1Entries?.classList.add('hidden');
-  $h1NewEntry?.classList.add('hidden');
-  $h1EditEntry?.classList.remove('hidden');
+  $h1.textContent = 'Edit Entry';
   const $eventTarget = event.target;
   if ($eventTarget.tagName === 'I') {
     const $closestElement = $eventTarget.closest('.entries-list');
