@@ -134,6 +134,7 @@ function toggleEntries(): void {
 
 const $entries = document.querySelector('div[data-view="entries"]');
 const $entryForm = document.querySelector('div[data-view="entry-form"]');
+const $deleteButton = document.querySelector('.delete-button');
 
 function viewSwap(view: string): void {
   if (view === 'entries') {
@@ -144,6 +145,7 @@ function viewSwap(view: string): void {
     $entryForm?.classList.remove('hidden');
     $entries?.classList.add('hidden');
     $newButton?.classList.add('hidden');
+    $deleteButton?.classList.add('hidden');
   }
   data.view = view;
 }
@@ -165,6 +167,7 @@ $newButton?.addEventListener('click', (event: Event) => {
 $ul?.addEventListener('click', (event: Event) => {
   viewSwap('entry-form');
   $h1.textContent = 'Edit Entry';
+  $deleteButton?.classList.remove('hidden');
 
   const $eventTarget = event.target as HTMLElement;
   if ($eventTarget.tagName === 'I') {

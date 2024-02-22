@@ -83,7 +83,14 @@ input {
   margin-bottom: 30px;
 }
 
-button {
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.save-button {
   background-color: rgb(76, 36, 116);
   color: white;
   margin: 10px 0;
@@ -93,9 +100,11 @@ button {
   box-shadow: 2px 2px black, -2px -2px white;
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
+.delete-button {
+  border: none;
+  color: red;
+  text-decoration: underline;
+  font-size: 1rem;
 }
 
 .div-pencil {
