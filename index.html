@@ -28,15 +28,11 @@
     </header>
 
     <main class="container">
-      <div class="h1-row">
-        <h1>New Entry</h1>
-        <div>
-          <button class="new-button">NEW</button>
-        </div>
-      </div>
-
       <div data-view="entry-form">
         <form>
+          <div class="h1-row">
+            <h1 class="new-entry-title">New Entry</h1>
+          </div>
           <div class="row">
             <div class="column-full column-half img-container">
               <img
@@ -75,6 +71,12 @@
         </form>
       </div>
       <div data-view="entries">
+        <div class="h1-row">
+          <h1 class="entries-title">Entries</h1>
+          <div>
+            <button class="new-button">NEW</button>
+          </div>
+        </div>
         <ul class="entries-ul"></ul>
         <h3 class="hidden">No entries have been recorded.</h3>
       </div>

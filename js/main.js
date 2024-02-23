@@ -7,7 +7,7 @@ $inputURL?.addEventListener('input', () => {
   $img.setAttribute('src', $inputURL.value);
 });
 const $form = document.querySelector('form');
-const $h1 = document.querySelector('h1');
+const $h1NewEntry = document.querySelector('.new-entry-title');
 $form?.addEventListener('submit', (event) => {
   event.preventDefault();
   let obj = {
@@ -43,7 +43,6 @@ $form?.addEventListener('submit', (event) => {
       }
     }
   }
-  $h1.textContent = 'Entries';
   data.editing = null;
   $form.reset();
   viewSwap('entries');
@@ -119,18 +118,16 @@ const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event) => {
   event?.preventDefault();
   viewSwap('entries');
-  $h1.textContent = 'Entries';
 });
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event) => {
   event.preventDefault();
   viewSwap('entry-form');
-  $h1.textContent = 'Entry Form';
+  $h1NewEntry.textContent = 'New Entry';
 });
-//editing
 $ul?.addEventListener('click', (event) => {
   viewSwap('entry-form');
-  $h1.textContent = 'Edit Entry';
+  $h1NewEntry.textContent = 'Edit Entry';
   $deleteEntry?.classList.remove('hidden');
   const $eventTarget = event.target;
   if ($eventTarget.tagName === 'I') {

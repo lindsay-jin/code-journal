@@ -16,7 +16,9 @@ $inputURL?.addEventListener('input', () => {
 });
 
 const $form = document.querySelector('form');
-const $h1 = document.querySelector('h1') as HTMLHeadingElement;
+const $h1NewEntry = document.querySelector(
+  '.new-entry-title'
+) as HTMLHeadingElement;
 
 $form?.addEventListener('submit', (event: Event) => {
   event.preventDefault();
@@ -58,8 +60,6 @@ $form?.addEventListener('submit', (event: Event) => {
       }
     }
   }
-
-  $h1.textContent = 'Entries';
 
   data.editing = null;
   $form.reset();
@@ -153,20 +153,18 @@ const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event: Event) => {
   event?.preventDefault();
   viewSwap('entries');
-  $h1.textContent = 'Entries';
 });
 
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event: Event) => {
   event.preventDefault();
   viewSwap('entry-form');
-  $h1.textContent = 'Entry Form';
+  $h1NewEntry.textContent = 'New Entry';
 });
 
-// editing
 $ul?.addEventListener('click', (event: Event) => {
   viewSwap('entry-form');
-  $h1.textContent = 'Edit Entry';
+  $h1NewEntry.textContent = 'Edit Entry';
   $deleteEntry?.classList.remove('hidden');
 
   const $eventTarget = event.target as HTMLElement;
