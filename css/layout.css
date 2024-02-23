@@ -41,9 +41,4 @@ img {
   .column-half {
     width: 50%;
   }
-
-  .bottom-row,
-  h1 {
-    padding: 0 0.75rem;
-  }
 }
