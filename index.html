@@ -28,17 +28,13 @@
     </header>
 
     <main class="container">
-      <div class="h1-row">
-        <h1>New Entry</h1>
-        <div>
-          <button class="new-button">NEW</button>
-        </div>
-      </div>
-
       <div data-view="entry-form">
         <form>
+          <div class="h1-row">
+            <h1 class="new-entry-title">New Entry</h1>
+          </div>
           <div class="row">
-            <div class="column-full column-half">
+            <div class="column-full column-half img-container">
               <img
                 src="images/placeholder-image-square.jpg"
                 alt="a placeholder-image-square" />
@@ -63,15 +59,37 @@
                 required></textarea>
             </label>
           </div>
-          <div class="button-container">
-            <button>SAVE</button>
+
+          <div class="bottom-row">
+            <div class="delete-entry-container">
+              <a href="" class="delete-entry">Delete Entry</a>
+            </div>
+            <div class="save-btn-container">
+              <button class="save-button">SAVE</button>
+            </div>
           </div>
         </form>
       </div>
       <div data-view="entries">
+        <div class="h1-row">
+          <h1 class="entries-title">Entries</h1>
+          <div>
+            <button class="new-button">NEW</button>
+          </div>
+        </div>
         <ul class="entries-ul"></ul>
         <h3 class="hidden">No entries have been recorded.</h3>
       </div>
+
+      <dialog class="delete-dialog">
+        <div>
+          <p>Are you sure you want to delete this entry?</p>
+          <div class="dialog-btn-container">
+            <button class="cancel-button">Cancel</button>
+            <button class="confirm-button">Confirm</button>
+          </div>
+        </div>
+      </dialog>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>

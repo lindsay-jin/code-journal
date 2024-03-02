@@ -7,7 +7,7 @@ $inputURL?.addEventListener('input', () => {
   $img.setAttribute('src', $inputURL.value);
 });
 const $form = document.querySelector('form');
-const $h1 = document.querySelector('h1');
+const $h1NewEntry = document.querySelector('.new-entry-title');
 $form?.addEventListener('submit', (event) => {
   event.preventDefault();
   let obj = {
@@ -35,16 +35,14 @@ $form?.addEventListener('submit', (event) => {
     }
     const newObj = renderEntry(obj);
     const $allEntries = $ul?.querySelectorAll('li');
-    const dataEditingEntryId = data.editing.entryId;
-    for (let i = 0; i < $allEntries?.length; i++) {
-      const $theEntry = $allEntries[i];
-      const $entryValue = $theEntry.getAttribute('data-entry-id');
-      if ($entryValue === dataEditingEntryId.toString()) {
-        $theEntry.replaceWith(newObj);
+    if (!$allEntries) throw new Error('The $allEntries query has failed.');
+    for (let i = 0; i < $allEntries.length; i++) {
+      const $dataEntryIdValue = $allEntries[i].getAttribute('data-entry-id');
+      if (Number($dataEntryIdValue) === data.editing.entryId) {
+        $allEntries[i].replaceWith(newObj);
       }
     }
   }
-  $h1.textContent = 'Entries';
   data.editing = null;
   $form.reset();
   viewSwap('entries');
@@ -102,6 +100,7 @@ function toggleEntries() {
 }
 const $entries = document.querySelector('div[data-view="entries"]');
 const $entryForm = document.querySelector('div[data-view="entry-form"]');
+const $deleteEntry = document.querySelector('.delete-entry');
 function viewSwap(view) {
   if (view === 'entries') {
     $entries?.classList.remove('hidden');
@@ -111,6 +110,7 @@ function viewSwap(view) {
     $entryForm?.classList.remove('hidden');
     $entries?.classList.add('hidden');
     $newButton?.classList.add('hidden');
+    $deleteEntry?.classList.add('hidden');
   }
   data.view = view;
 }
@@ -118,17 +118,17 @@ const $entriesNav = document.querySelector('.nav-entries');
 $entriesNav?.addEventListener('click', (event) => {
   event?.preventDefault();
   viewSwap('entries');
-  $h1.textContent = 'Entries';
 });
 const $newButton = document.querySelector('.new-button');
 $newButton?.addEventListener('click', (event) => {
   event.preventDefault();
   viewSwap('entry-form');
-  $h1.textContent = 'Entry Form';
+  $h1NewEntry.textContent = 'New Entry';
 });
 $ul?.addEventListener('click', (event) => {
   viewSwap('entry-form');
-  $h1.textContent = 'Edit Entry';
+  $h1NewEntry.textContent = 'Edit Entry';
+  $deleteEntry?.classList.remove('hidden');
   const $eventTarget = event.target;
   if ($eventTarget.tagName === 'I') {
     const $closestElement = $eventTarget.closest('.entries-list');
@@ -145,4 +145,41 @@ $ul?.addEventListener('click', (event) => {
   $inputURL.value = data.editing?.photoURL;
   $textarea.value = data.editing?.notes;
   $img.setAttribute('src', $inputURL.value);
+});
+const $deleteDialog = document.querySelector('.delete-dialog');
+$deleteEntry?.addEventListener('click', (event) => {
+  event?.preventDefault();
+  $deleteDialog.showModal();
+});
+const $cancelButton = document.querySelector('.cancel-button');
+$cancelButton?.addEventListener('click', (event) => {
+  event?.preventDefault();
+  $deleteDialog.close();
+});
+const $confirmButton = document.querySelector('.confirm-button');
+$confirmButton?.addEventListener('click', (event) => {
+  event?.preventDefault();
+  if (!data.editing) throw new Error('The data.editing query has failed.');
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+    }
+  }
+  const $allEntries = $ul?.querySelectorAll('li');
+  if (!$allEntries) throw new Error('The $allEntries query has failed.');
+  for (let i = 0; i < $allEntries.length; i++) {
+    const $dataEntryIdValue = $allEntries[i].getAttribute('data-entry-id');
+    if (Number($dataEntryIdValue) === data.editing.entryId) {
+      $allEntries[i].remove();
+    }
+  }
+  toggleEntries();
+  $deleteDialog.close();
+  $form?.reset();
+  data.editing = null;
+  viewSwap('entries');
+  $inputTitle.value = '';
+  $inputURL.value = '';
+  $textarea.value = '';
+  $img.setAttribute('src', 'images/placeholder-image-square.jpg');
 });

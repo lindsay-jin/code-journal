@@ -15,6 +15,7 @@ nav {
 .nav-entries {
   padding-left: 20px;
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .h1-row {
@@ -24,10 +25,6 @@ nav {
   align-items: center;
 }
 
-h1 {
-  padding: 0 2.25rem;
-}
-
 .new-button {
   background-color: rgb(76, 38, 118);
   color: white;
@@ -35,6 +32,7 @@ h1 {
   border-radius: 5px;
   width: 70px;
   height: 35px;
+  cursor: pointer;
 }
 
 li {
@@ -83,7 +81,14 @@ input {
   margin-bottom: 30px;
 }
 
-button {
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.save-button {
   background-color: rgb(76, 36, 116);
   color: white;
   margin: 10px 0;
@@ -91,11 +96,14 @@ button {
   height: 35px;
   border-radius: 5px;
   box-shadow: 2px 2px black, -2px -2px white;
+  cursor: pointer;
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
+.delete-entry {
+  border: none;
+  color: red;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .div-pencil {
@@ -106,4 +114,29 @@ button {
 
 .fa-solid {
   cursor: pointer;
+}
+
+.dialog-btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 90px;
+  height: 30px;
+}
+
+.confirm-button {
+  background-color: red;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 90px;
+  height: 30px;
+}
+
+ul {
+  padding: 0;
 }
